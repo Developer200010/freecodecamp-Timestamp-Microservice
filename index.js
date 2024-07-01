@@ -26,11 +26,11 @@ app.get("/api/:date?", function (req, res) {
   let dateObj;
   let utcDate;
 
+  let isUnix = /^\d+$/.test(date);
+
   if(!date){
     dateObj = new Date();
-  }
-  let isUnix = /^\d+$/.test(date);
-  if(date && isUnix){
+  }else if(date && isUnix){
     unixDate = parseInt(date);
     dateObj = new Date(unixDate);
   }else if(date && !isUnix){
@@ -42,7 +42,7 @@ app.get("/api/:date?", function (req, res) {
   }
   utcDate = dateObj.toUTCString();
   unixDate = dateObj.getTime();
-
+  
   res.json({unix: unixDate,utc: utcDate});
   });
 
